@@ -510,6 +510,9 @@ Component<CalendarData, CalendarProp, CalendarMethod, CalendarCustomProp>({
           else this._printer_.cancelThemeChange();
         }
       }
+    },
+    panels: function (e) {
+      console.log(e, 123);
     }
   },
   export() {

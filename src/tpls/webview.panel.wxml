@@ -31,7 +31,7 @@
                 </view>
               </view>
               <view wx:if="{{ day.mark || alignDate === 'baseline' }}" class="wc__panel-mark" style="{{ day.mark.style }}">
-                {{ day.mark.text }}
+                <image style="position: absolute; top: 24rpx; left: -12rpx; width: 24rpx; height: 4rpx;" mode="scaleToFill" src="{{day.mark.text}}"></image>
               </view>
             </view>
             <view wx:if="{{ day.schedules.length && current === pdx || currView == 'schedule'  }}" class="wc__panel-schedules">

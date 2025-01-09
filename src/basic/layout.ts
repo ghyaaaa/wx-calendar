@@ -35,7 +35,7 @@ export class Layout {
   /** 设备像素比 */
   public static dpr: number = 1;
   /** 常规状态下（月视图）的日历主面板高度，单位rpx */
-  public static CalendarMainHeight: number = 600;
+  public static CalendarMainHeight: number = 540;
   /** 日历头部高度，单位rpx */
   public static CalendarHeaderHeight: number = 100;
   /** 星期容器高度，单位rpx */
