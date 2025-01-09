@@ -1,0 +1,11 @@
+<view class="container" style="padding-top: {{ padding }}px;">
+  <calendar 
+    id="calendar" 
+    vibrate="{{false}}"
+    marks="{{ markers }}" 
+    bindload="handleLoad"
+    bindclick="handleClick"
+    bindchange="handleChange" 
+    bindviewchange="handleViewChange">
+  </calendar>
+</view>

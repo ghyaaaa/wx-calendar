@@ -1,0 +1,47 @@
+/*
+ * Copyright 2023 lspriv. All Rights Reserved.
+ * Distributed under MIT license.
+ * See File LICENSE for detail or copy at https://opensource.org/licenses/MIT
+ * @Description: wxs工具方法
+ * @Author: lspriv
+ * @LastEditTime: 2024-09-11 12:35:05
+ */
+
+var isSkyline = function (renderer) {
+  console.log('renderer', renderer);
+
+  return renderer === 'skyline' || renderer === 'unknown';
+};
+
+var isChecked = function (pointer, date, checked, pdx, curr) {
+  if (pointer && !pointer.show) return false;
+  if (!checked || !date) return false;
+  return pdx === curr && date.year === checked.year && date.month === checked.month && date.day === checked.day;
+};
+
+var cutSchedules = function (schedules, rows, maxSize) {
+  if (!schedules || !schedules.length) return [];
+  var ms = rows === 6 ? maxSize : maxSize + 1;
+  var size = schedules.length <= ms ? schedules.length : ms - 1;
+  return schedules.slice(0, size);
+};
+
+var scheduleShowRest = function (schedules, rows, maxSize) {
+  if (!schedules || !schedules.length) return false;
+  var _maxSize = rows === 6 ? maxSize : maxSize + 1;
+  return schedules.length > _maxSize;
+};
+
+var scheduleRest = function (schedules, rows, maxSize) {
+  if (!schedules || !schedules.length) return 0;
+  var _maxSize = rows === 6 ? maxSize - 1 : maxSize;
+  return schedules.length - _maxSize;
+};
+
+module.exports = {
+  isSkyline,
+  isChecked,
+  cutSchedules,
+  scheduleShowRest,
+  scheduleRest
+};

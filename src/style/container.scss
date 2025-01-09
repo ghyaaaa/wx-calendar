@@ -1,0 +1,26 @@
+.wcc {
+  width: 100vw;
+  @include theme-values($wc-theme-size);
+  @include theme-values($wc-theme-light, 'light');
+  @include theme-use($wc-theme-light, 'light');
+  @include if(darkmode) {
+    @include theme-values($wc-theme-dark, 'dark');
+  }
+}
+
+view,
+swiper {
+  box-sizing: border-box;
+}
+
+$fixed-view-sub: 20rpx;
+
+.wc {
+  position: relative;
+  width: 100%;
+  background: theme(bg);
+  display: flex;
+  flex-direction: column;
+  z-index: 1024;
+  overflow: hidden;
+}

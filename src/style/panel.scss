@@ -1,0 +1,314 @@
+/*
+ * Copyright 2023 lspriv. All Rights Reserved.
+ * Distributed under MIT license.
+ * See File LICENSE for detail or copy at https://opensource.org/licenses/MIT
+ * @Description: 周/月主面板
+ * @Author: lspriv
+ */
+
+.wc__panel {
+  width: 100%;
+  height: $wc-calendar-panel-height;
+  position: relative;
+  background: transparent;
+  overflow: hidden;
+  contain: layout style;
+  
+  &-container {
+    width: 100%;
+    height: 100%;
+    min-height: $wc-calendar-panel-height;
+    padding: 0 10rpx;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    @include if(wl-4) {
+      .wc__panel-week {
+        @include month-week-rows(4);
+      }
+    }
+    @include if(wl-5) {
+      .wc__panel-week {
+        @include month-week-rows(5);
+      }
+    }
+    @include if(wl-6) {
+      .wc__panel-week {
+        @include month-week-rows(6);
+      }
+    }
+  }
+  &-week {
+    width: 100%;
+    position: relative;
+    z-index: 1024;
+    transition: opacity .28s ease;
+    @include column-rect;
+  }
+  &-date {
+    @include column-width;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: opacity .28s ease 0s;
+    overflow: hidden;
+    @include or(last, next) {
+      opacity: .3;
+    }
+    @include if(today) {
+      .wc__panel-solar {
+        color: theme(today-color);
+      }
+    }
+    @include if(checked) {
+      .wc__panel-day {
+        &::after {
+          color: theme(checked-dot-color);
+        }
+      }
+      .wc__panel-solar, .wc__panel-mark {
+        transition-delay: .1s;
+      }
+      .wc__panel-solar {
+        color: theme(checked-color);
+      }
+      .wc__panel-mark {
+        color: theme(checked-mark-color);
+      }
+    }
+
+    @include if(today, checked) {
+      @extend %date-today-checked;
+    }
+
+    @include if(scheduled) {
+      .wc__panel-day::after {
+        content: "･";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        color: theme(dot-color);
+        font-size: 32rpx;
+        line-height: 1;
+        opacity: 1;
+        transition: opacity .28s ease;
+        @include animation-fade;
+      }
+    }
+  }
+  &-day {
+    width: 100%;
+    height: 100rpx;
+    min-height: 100rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 50%;
+  }
+  &-solar {
+    font-size: theme(date-size);
+    line-height: 1;
+    font-weight: bold;
+    color: theme(date-color);
+    position: relative;
+    @include transition(color);
+  }
+  &-mark {
+    font-size: theme(mark-size);
+    line-height: 1;
+    flex: 0 0 theme(mark-size);
+    color: theme(mark-color);
+    font-weight: bold;
+    margin-top: 4rpx;
+    transition: color .3s ease 0s;
+    position: relative;
+    width: 100%;
+    text-align: center;
+  }
+  &-schedules {
+    width: 100%;
+    padding: 4rpx 2rpx 0;
+    overflow: hidden;
+    opacity: 0;
+    transform-origin: 50% 0;
+  }
+  &-schedule {
+    font-size: theme(schedule-size);
+    line-height: 1.5;
+    font-weight: bold;
+    margin-bottom: 4rpx;
+    color: theme(schedule-color);
+    background-color: theme(schedule-bg);
+    padding: 0rpx 6rpx;
+    border-radius: 2rpx;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    @include animation-fade;
+    @include if(more) {
+      line-height: 1;
+      padding: unset !important;
+      margin-bottom: 0;
+      background-color: transparent;
+      color: theme(schedule-color);
+    }
+  }
+  &-corner {
+    position: absolute;
+    top: 0;
+    right: -16rpx;
+    font-size: theme(corner-size);
+    line-height: 1;
+    color: theme(mark-color);
+    font-weight: bold;
+    @include animation-fade;
+  }
+  &-pointer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: $wc-calendar-pointer-size;
+    height: $wc-calendar-pointer-size;
+    border-radius: 50%;
+    transform: translate(-50%, 0);
+    z-index: -1;
+    overflow: hidden;
+    @include if (animate) {
+      transition: all .28s ease 0s;
+    }
+    @include if(today) {
+      .wc__panel-pointer-inner {
+        // background: theme(checked-today-bg);
+        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIcSURBVHgB7ZnfcZtAEMa/PasApwM6SDowSgUuwanAUjyZPEZ6zGQS4w6UDpIKfOnAqSB0EL3bYv0d1oMMhwToMHiG3xNz/Lkfy+rELsDIyDMEgZjFemqAc26e8aJRPmiQIoP9buUnAhFE+GOsMxF84eZpxSEpFIsQ4kcJX8Ua40k0rnlKulF8SKxYtKSV8OdYoweDa0btHG0QrCYZll+tpGhII2GXpycGM4peovrx1yZTLBVIGPF13XNqCzNPL7Z5GiEsjfL7oHCLPG1LOlFMD6WJ2bfz6r0uKHuL7mUd0YPg3zzmnHuojHAuq3lkXxxVzH9YSXz7vML5KsC7RY9w+Zv6lj9vSnDJ6iWyu5zA71CKcL50Cf5jADDKb4pLXinCvLN3GA5RccCXEkf/IYSCwXtbHCsJ64CEfRi8MkbhrhmFu2YU7ppRuGsGLcw3s1Kt53v5ucNA2EgN4XtXFA4EVh5/i2Ml4e37p0XPUHblK/+9OWxYU6FnMmDpG/cKf7Nypz1Kc+5FUlHuV64Srmpl42SBF8bJcu5l1f6DjRTWeJFhb0LCd3yeo7AZA3R9K3/2HdaoVeU6QKHFWeGkErJVtYurqCcGl+6x4XjWvE7CH9dNJ83AXfI0Yd+AOX6BNgh+bTLMk67brUU+TfVsA6xqp0nNPN1HqE8Gh/J7vW2p3uBIgn2UceTi7qOMPIkzR1NOYPkUfjfJ05GRBjwCYQu6VeaK2UcAAAAASUVORK5CYII=");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: 50% 50%;
+      }
+    }
+    &-inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border-radius: inherit;
+      // transition: background-color .28s ease;
+      // background: theme(checked-bg);
+      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFGSURBVHgB7ZnrDoIwDEYr4uX931ZFkC+ORKG7lK0Mkp6kv9jGSe0WO4gM448TlQNrncdoXIB+jLeLYi8pQTvGJbAexF9UQDxXGBmFaJM4Plt8rTDmQbSldXT0FR9IiFQY41sXJcoJ0pBPFpe8NFanaxGVScrLpXW6Fog/KJLtmPDFxZa8XLCcAxNryAI4Ics999D3M0+nQC2u5HHzCdeUpZADJzwdXbVBaSz2GCesfRpk4cvwXlgcCrvOJocJa2PC2piwNiasjQkXZtF9cMLsH+dKJAmLW29FkoWLXS1lwLb/vhp+Un3YRjTUhA6R55ogYexeCglhQg1pyHa+hyndBcbcSb8Twb5BGfQxmVQOc1U1H48SuVI+KLdJVOUycD7vENetc3As3gTrJNVpiK0+GSCT2P3VPxnMgXjzs+50qSeqU8MQ8AGf9kJIZYfhoQAAAABJRU5ErkJggg==");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: 50% 50%;
+      // @include if(animate) {
+      //   @include animation-pointer;
+      // }
+    }
+  }
+}
+
+.wcc {
+  .wc.wc--week {
+    .wc__panel-container {
+      @include if(wl-6) {
+        .wc__panel-week {
+          @include month-week-rows(6);
+          @include if(next) {
+            opacity: 0;
+          }
+          @include if(show) {
+            opacity: 1 !important;
+            transition: unset !important;
+          }
+        }
+      }
+    }
+    .wc__panel-schedules {
+      opacity: 0;
+    }
+    .wc__panel-date {
+      opacity: 1 !important;
+    }
+  }
+  .wc.wc--month {
+    .wc__panel-schedules {
+      opacity: 0;
+    }
+  }
+  .wc.wc--schedule {
+    .wc__panel-day::after {
+      opacity: 0 !important;
+    }
+    .wc__panel-schedules {
+      opacity: 1;
+    }
+  }
+  .wc.wc--hidden-rest {
+    .wc__panel {
+      .wc__panel-date {
+        &.wc__panel-date--last,
+        &.wc__panel-date--next {
+          opacity: 0;
+        }
+      }
+    } 
+  }
+  &:not(.wc.wc--week) {
+    .wc__panel-container {
+      @include if(wl-6) {
+        .wc__panel-week {
+          @include if(next) {
+            opacity: 1;
+            transition: unset !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.wc.wc--same-checked {
+  .wc__panel-date {
+    @include if (checked) {
+      @extend %date-today-checked;
+    }
+  }
+}
+
+.wc__panel-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.wcc--webview {
+  .wc__panel-date--scheduled {
+    --wc-dot-opacity: 1;
+    .wc__panel-day {
+      &::after {
+        opacity: var(--wc-dot-opacity);
+      }
+    }
+  }
+  .wc__panel-schedule {
+    padding: 2rpx 6rpx;
+  }
+}
+
+%date-today-checked {
+  .wc__panel-day {
+    &::after {
+      color: theme(checked-today-color) !important;
+    }
+  }
+  .wc__panel-solar,
+  .wc__panel-mark,
+  .wc__panel-corner {
+    color: theme(checked-today-color) !important;
+  }
+}
