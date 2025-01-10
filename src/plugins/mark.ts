@@ -29,7 +29,6 @@ export class MarkPlugin implements Plugin {
     const map: WcMarkMap = new Map();
 
     for (let i = 0; i < marks.length; i++) {
-      console.log(marks, 123123);
       const mark = marks[i];
       const date = mark.date ? normalDate(mark.date) : normalDate(+mark.year!, +mark.month!, +mark.day!);
       const key = `${date.year}_${date.month}_${date.day}`;

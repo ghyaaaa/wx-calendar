@@ -25,7 +25,7 @@
                 <view class="wc__panel-solar" style="{{ day.solar ? day.solar.style : '' }}">
                   {{ day.solar ? day.solar.text : day.day }}
                   <view wx:if="{{ day.corner }}" class="wc__panel-corner" style="{{ day.corner.style }}">
-                    {{ day.corner.text }}
+                    D
                   </view>
                 </view>
                 <view wx:if="{{ day.mark || alignDate === 'baseline' }}" class="wc__panel-mark" style="{{ day.mark.style }}">

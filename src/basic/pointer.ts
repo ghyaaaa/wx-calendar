@@ -43,6 +43,7 @@ const calcCurrIdx = (mon: WcMonth, checked: CalendarDay): PointerIndexLocation =
 
 const calcPosition = (mon: WcMonth, checked: CalendarDay, centres: number[]): PointerLocation => {
   const { ddx, wdx, len } = calcCurrIdx(mon, checked);
+  console.log('calcPosition', ddx, wdx, len);
   const x = `${centres[ddx]}px`;
   const y = `calc(100% / ${len} * ${wdx})`;
   return { x, y };

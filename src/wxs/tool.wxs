@@ -8,8 +8,6 @@
  */
 
 var isSkyline = function (renderer) {
-  console.log('renderer', renderer);
-
   return renderer === 'skyline' || renderer === 'unknown';
 };
 

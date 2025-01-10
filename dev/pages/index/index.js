@@ -24,16 +24,21 @@ Page({
         month: 1,
         day: 5,
         type: 'corner',
-        text: '休',
-        style: { color: '#409EFF' }
+        text: '休'
       },
       {
         // 已完成
         year: 2025,
         month: 1,
         day: 10,
-        type: 'schedule',
-        style: { color: '#409EFF' }
+        type: 'schedule'
+      },
+      {
+        // 已完成
+        year: 2025,
+        month: 1,
+        day: 6,
+        type: 'schedule'
       }
     ]
   },
