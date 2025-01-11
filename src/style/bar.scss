@@ -8,14 +8,16 @@
 
 .wc__bar {
   width: 100%;
-  height: $wc-calendar-bar-height;
+  height: 46rpx;
+  background: #F6F7FB;
+  border-top-right-radius: 30rpx;
+  border-top-left-radius: 30rpx;
   position: relative;
   z-index: 1024;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
-  background: transparent;
   opacity: 1;
   transform: translateY(0);
   transition: all .28s ease;

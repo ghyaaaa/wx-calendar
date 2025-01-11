@@ -8,8 +8,8 @@
 
 .wc__week {
   @include column-rect;
-  height: $wc-calendar-weeks-height;
-  padding: 31rpx 31rpx 0;
+  height: auto;
+  padding: 30rpx;
   position: relative;
   z-index: 1024;
   background: transparent;
